@@ -1,0 +1,159 @@
+# way_double_pinyin
+
+schema:
+  schema_id: way_double_pinyin
+  name: "双‧行道难"
+  version: "0.1"
+  author:
+    - "GB/T 34947-2017"
+    - So
+  description: "行道难双拼基于国标双拼键位"
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [中文, 西文]
+  - name: full_shape
+    states: [半角, 全角]
+  - name: simplification
+    states: [漢字, 汉字]
+
+engine:
+  processors:
+    - ascii_composer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - script_translator
+  filters:
+    - simplifier
+    - uniquifier
+
+speller:
+  alphabet: abcdefghijklmnopqrstuvwxyz
+  finals: eo
+  delimiter: "'"
+  algebra:
+    # 简拼
+    - abbrev/^([a-z])[a-z]+$/$1/
+    - abbrev/^([zcs]h)[a-z]+$/$1/
+
+    # 特殊码
+    - xform/^er$/AL/
+    - xform/^([aoe].*)$/A$1/
+
+    # zh ch sh
+    - xform/(^|')zh/V/
+    - xform/(^|')ch/I/
+    - xform/(^|')sh/U/
+
+    # 四码
+    - xform/[iu]ang$/N/
+    - xform/i?ong$/S/
+
+    # 三码
+    - xform/[vu]an$/W/
+    - xform/ang$/G/
+    - xform/eng$/H/
+    - xform/ing$/J/
+    - xform/ian$/D/
+    - xform/iao$/M/
+    - xform/(iu|uai)$/Y/
+
+    # 两码
+    - xform/[iu]a$/Q/
+    - xform/[vu]n$/Z/
+    - xform/[vu]e$/X/
+    - xform/an$/F/
+    - xform/ao$/C/
+    - xform/en$/R/
+    - xform/in$/L/
+    - xform/ai$/K/
+    - xform/ui$/V/
+    - xform/ei$/B/
+    - xform/ie$/T/
+    - xform/uo$/O/
+    - xform/ou$/P/
+
+    - xlit/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
+
+translator:
+  dictionary: way_pinyin.extended
+  prism: way_double_pinyin
+  enable_sentence: true
+  user_dict: way_pinyin
+  enable_user_dict: true
+  preedit_format:
+    - xlit/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/
+
+    # 特殊码
+    - xform/AL/er/
+
+    # 零声母
+    - xform/(^|['])A([AOE])/\L$2/
+
+    # zhi chi shi 与分隔符提示
+    - xform/(^|['])U/$1sh/
+    - xform/(^|['])I/$1ch/
+    - xform/(^|['])V/$1zh/
+    - xform/(^|['])([A-Z])/$1$2/
+
+    # 双码
+    - xform/([QDJLX])Q/$1ia/
+    - xform/(\w)Q/$1ua/
+
+    - xform/([QDJLXNM])Y/$1iu/
+    - xform/(\w)Y/$1uai/
+
+    - xform/([WYPFBM])O/$1o/
+    - xform/(\w)O/$1uo/
+
+    - xform/([QJX])S/$1iong/
+    - xform/(\w)S/$1ong/
+
+    - xform/([LN])V/$1ü/
+    - xform/(\w)V/$1ui/
+
+    - xform/([QJLXN])N/$1iang/
+    - xform/(\w)N/$1uang/
+
+    # 单码
+    - xform/(\w)W/$1uan/
+    - xform/(\w)R/$1en/
+    - xform/(\w)T/$1ie/
+    - xform/(\w)P/$1ou/
+
+    - xform/(\w)D/$1ian/
+    - xform/(\w)F/$1an/
+    - xform/(\w)G/$1ang/
+    - xform/(\w)H/$1eng/
+    - xform/(\w)J/$1ing/
+    - xform/(\w)K/$1ai/
+    - xform/(\w)L/$1in/
+
+    - xform/(\w)Z/$1un/
+    - xform/(\w)X/$1ue/
+    - xform/(\w)C/$1ao/
+    - xform/(\w)B/$1ei/
+    - xform/(\w)M/$1iao/
+
+    # 零声母
+    - xform/A([a-z]+)/$1/
+
+    - xlit/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuüwxyz/
+
+punctuator:
+  import_preset: default
+
+key_binder:
+  import_preset: default

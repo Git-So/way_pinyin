@@ -2,3 +2,4 @@
 patch:
   schema_list:
     - schema: way_pinyin
+    - schema: way_double_pinyin
