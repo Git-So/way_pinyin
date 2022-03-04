@@ -42,7 +42,7 @@ engine:
 speller:
   alphabet: abcdefghijklmnopqrstuvwxyz
   initials: qwertyopasdfghjklzxcbnm
-  delimiter: " '"
+  delimiter: "'"
   algebra:
     # 简拼
     - abbrev/^([a-z])[a-z]+$/$1/
