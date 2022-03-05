@@ -45,8 +45,8 @@ speller:
   delimiter: "'"
   algebra:
     # 简拼
-    - abbrev/^([a-z])[a-z]+$/$1/
-    - abbrev/^([zcs]h)[a-z]+$/$1/
+    - abbrev/^([qwertyopasdfghjklzxcbnm])[euioagvn]+$/$1/
+    - abbrev/^([zcs]h)[euioagvn]+$/$1/
 
 translator:
   dictionary: way_pinyin.extended
