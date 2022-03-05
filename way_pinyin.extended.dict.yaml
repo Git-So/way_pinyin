@@ -10,3 +10,4 @@ import_tables:
   - way_pinyin.lv1
   - way_pinyin.lv2
   - way_pinyin.lv3
+  - way_pinyin.other
