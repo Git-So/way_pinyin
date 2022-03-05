@@ -7,7 +7,5 @@ version: "0.1"
 sort: original
 use_preset_vocabulary: false
 import_tables:
-  - way_pinyin.lv1
-  - way_pinyin.lv2
-  - way_pinyin.lv3
+  - way_pinyin.most
   - way_pinyin.other
